@@ -82,10 +82,13 @@ public class Cartao {
 
         for (Cupao cupao : cupoes.keySet()) {
             if(cupoes.get(cupao) && v.foiUsado(cupao)) {
-                cupao.aplicar(this, v);
-                cupoes.remove(cupao);
+                if(cupao.aplicar(this, v)){
+                    cupoes.remove(cupao);
+                }
             }
         }
+
+        estaAtivo = false;
     }
 
     /**

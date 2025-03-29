@@ -6,16 +6,6 @@ import java.util.List;
 
 import comercio.ProdutoInfo;
 
-
-/*Cupao{
-	final String id;
-	final byte desconto;
-	final String descricaoProdutoValidos;
-	LocalDate validade
-	ArrayList<Produto>
-}
- */
-
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
  * cupão pode ser associado a um ou mais cartões de fidelização. Cada cupão dá
@@ -79,13 +69,13 @@ public class Cupao {
 
     // Verificações
     public void verificarId(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("O id não pode ser vazio ou nulo!");
         }
     }
 
     public void verificarDescricao(String descricao) {
-        if (descricao == null || descricao.isEmpty() || descricao.isBlank()) {
+        if (descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("A descrição não pode ser vazia ou nula!");
         }
     }
@@ -153,12 +143,17 @@ public class Cupao {
      * algum dos produtos abrangidos pelo cupão, este é dado como tendo sido
      * aplicado. Se for aplicado deve ser removido do cartão.
      * 
-     * @param c o cartão a ser usado na venda
-     * @param v a venda a ser processada
+     * @param cartao o cartão a ser usado na venda
+     * @param venda a venda a ser processada
      * @return true se o cupão foi aplicado na venda
      */
-    public boolean aplicar(Cartao c, Venda v) {
-        // TODO implementar este método
+    public boolean aplicar(Cartao cartao, Venda venda) {
+        for(ProdutoVendido produto : venda.getProdutosVendidos()) {
+            if(abrange(produto) && produto.getDescontoAplicado() < desconto) {
+                aplicar(cartao, produto);
+            }
+        }
+
         return false;
     }
 
@@ -167,21 +162,21 @@ public class Cupao {
      * pelo cupão se fizer parte da lista dos produtos e não tiver já sido aplicado
      * ao produto um desconto maior do que o dado pelo cupão.
      * 
-     * @param p o produto a testar
+     * @param produto o produto a testar
      * @return true, se o produto é abrangido pela cupão
      */
-    public boolean abrange(ProdutoVendido p) {
-        // TODO implementar este método
-        return false;
+    public boolean abrange(ProdutoVendido produto) {
+        return produtos.contains(produto.getProduto());
     }
 
     /**
      * Método auxiliar para aplicar o cupão a um produto.
      * 
-     * @param c o cartão onde acumular o saldo
-     * @param p o produto a ser usado
+     * @param cartao o cartão onde acumular o saldo
+     * @param produto o produto a ser usado
      */
-    private void aplicar(Cartao c, ProdutoVendido p) {
-        // TODO implementar este método
+    private void aplicar(Cartao cartao, ProdutoVendido produto) {
+        produto.setDescontoAplicado(desconto);
+        cartao.acumularSaldo(desconto);
     }
 }
