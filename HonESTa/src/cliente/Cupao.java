@@ -25,6 +25,7 @@ public class Cupao {
     private final String id;
     private final String descricao;
     private final byte desconto;
+    private final LocalDate inicio;
     private final LocalDate validade;
     private List <ProdutoInfo> produtos;
 
@@ -33,18 +34,50 @@ public class Cupao {
 
         verificarId(id);
         this.id = id;
+
         verificarDescricao(descricao);
         this.descricao = descricao;
+
         verificarCupao(desconto);
         this.desconto = desconto;
+
         verificarValidade(validade);
         this.validade = validade;
+
         verificarProdutos(produtos);
         this.produtos = produtos;
+
+        this.inicio = LocalDate.now();
+    }
+
+    public Cupao(String id, String descricao, byte desconto, LocalDate validade,
+                 List<ProdutoInfo> produtos, LocalDate inicio) {
+        verificarId(id);
+        this.id = id;
+
+        verificarDescricao(descricao);
+        this.descricao = descricao;
+
+        verificarCupao(desconto);
+        this.desconto = desconto;
+
+        verificarValidade(validade);
+        this.validade = validade;
+
+        verificarProdutos(produtos);
+        this.produtos = produtos;
+
+        verificarInicio(inicio);
+        this.inicio = inicio;
+    }
+
+    private void verificarInicio(LocalDate inicio) {
+        if(inicio == null) {
+            throw new IllegalArgumentException("Data de inicio nao pode ser nula!");
+        }
     }
 
     // Verificações
-
     public void verificarId(String id) {
         if (id == null || id.isEmpty() || id.isBlank()) {
             throw new IllegalArgumentException("O id não pode ser vazio ou nulo!");
@@ -103,18 +136,16 @@ public class Cupao {
         this.produtos = produtos;
     }
 
+    public boolean eFuturo(){
+        return inicio.isAfter(LocalDate.now());
+    }
+
     public boolean estaValido() {
-        if (validade.isBefore(LocalDate.now())) {
-            return false;
-        }
-        return true;
+        return validade.isBefore(LocalDate.now());
     }
 
     public boolean estaValido(LocalDate data) {
-        if (data.isBefore(validade) || data.equals(validade)) {
-            return true;
-        }
-        return false;
+        return data.isBefore(validade) || data.equals(validade);
     }
 
     /**
