@@ -14,6 +14,10 @@ public class Cartao {
     private HashMap<Cupao, Boolean> cupoes;
     private boolean estaAtivo;
 
+    public String getId() {
+        return id;
+    }
+
     public Cartao(String id, long saldo, List<Cupao> cupoes) {
         this.id = id;
 
