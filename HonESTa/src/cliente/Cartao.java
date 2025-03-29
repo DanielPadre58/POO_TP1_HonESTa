@@ -76,7 +76,6 @@ public class Cartao {
      * @throws IllegalStateException se o cartão não estiver ativo
      */
     public void usar(Venda v) {
-        // TODO implementar este método
         if(!estaAtivo){
             throw new IllegalStateException("Nao pode usar um carto que nao foi ativo");
         }
@@ -96,7 +95,6 @@ public class Cartao {
      * @return uma lista com os cupões disponíveis
      */
     public List<Cupao> getCupoesDisponiveis() {
-        // TODO implementar este método
         List<Cupao> cupoesDisponiveis = new ArrayList<>();
         for(Cupao cupao : cupoes.keySet()) {
             if(cupao.estaValido(LocalDate.now())){
@@ -114,15 +112,20 @@ public class Cartao {
      * @return uma lista com os cupões que estarão disponíveis no futuro
      */
     public List<Cupao> getCupoesFuturos() {
-        // TODO implementar este método
-        return null;
+        List<Cupao> cupoesFuturos = new ArrayList<>();
+        for(Cupao cupao : cupoes.keySet()) {
+            if(cupao.eFuturo()){
+                cupoesFuturos.add(cupao);
+            }
+        }
+
+        return cupoesFuturos;
     }
 
     /**
      * Atualiza os cupões, removendo os que já passaram de validade
      */
     public void atualizarCupoes() {
-        // TODO implementar este método
         for(Cupao cupao : cupoes.keySet()) {
             if(!cupao.estaValido()){
                 cupoes.remove(cupao);
@@ -136,7 +139,6 @@ public class Cartao {
      * @param gasto o que retirar do saldo.
      */
     public void reduzirSaldo(long gasto) {
-        // TODO implementar este método
         if(gasto > saldo){
             saldo = 0;
             return;
@@ -151,7 +153,6 @@ public class Cartao {
      * @param valor valor a acumular no saldo
      */
     public void acumularSaldo(long valor) {
-        // TODO implementar este método
         saldo += valor;
     }
 
@@ -161,7 +162,6 @@ public class Cartao {
      * @return true se está ativo.
      */
     public boolean estaAtivo() {
-        // TODO implementar este método
         return estaAtivo;
     }
 }
