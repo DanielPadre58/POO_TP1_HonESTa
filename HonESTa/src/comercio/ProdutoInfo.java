@@ -1,15 +1,21 @@
 package comercio;
 
+import util.GeradorId;
+
 public class ProdutoInfo {
     private final String codigoBarras, marca, modelo;
     private long precoAtual;
 
     public ProdutoInfo(String codigoBarras, String marca, String modelo, long precoAtual) {
-        this.codigoBarras = codigoBarras;
+        verficarCodigoDeBarras(codigoBarras);
+        this.codigoBarras = GeradorId.geradorCodigoBarras();
+
         verificarMarca(marca);
         this.marca = marca;
+
         verificarModelo(modelo);
         this.modelo = modelo;
+
         verificarPreco(precoAtual);
         this.precoAtual = precoAtual;
     }
@@ -41,6 +47,12 @@ public class ProdutoInfo {
 
     // Verificações
 
+    private void verficarCodigoDeBarras(String codigoBarras) {
+        if(codigoBarras == null || codigoBarras.isBlank()) {
+            throw new IllegalArgumentException("Codigo de barras nao pode ser vazio");
+        }
+    }
+
     public void verificarPreco(long precoAtual) {
         if (precoAtual <= 0) {
             throw new IllegalArgumentException("O preço não pode ser negativo ou zero!");
@@ -48,13 +60,13 @@ public class ProdutoInfo {
     }
 
     public void verificarMarca(String marca) {
-        if (marca == null || marca.isEmpty() || marca.isBlank()) {
+        if (marca == null || marca.isBlank()) {
             throw new IllegalArgumentException("A marca não pode ser vazia ou nulo!");
         }
     }
 
     public void verificarModelo(String modelo) {
-        if (modelo == null || modelo.isEmpty() || modelo.isBlank()) {
+        if (modelo == null || modelo.isBlank()) {
             throw new IllegalArgumentException("O modelo não pode ser vazia ou nulo!");
         }
     }

@@ -50,6 +50,14 @@ public class ProdutoVendido {
         this.descontoAplicado = 0;
     }
 
+    public ProdutoVendido(ProdutoInfo produto) {
+        validarProduto(produto);
+        this.produto = produto;
+
+        this.preco = produto.getPrecoAtual();
+        this.descontoAplicado = 0;
+    }
+
     private void validarDesconto(long descontoAplicado) {
         if(descontoAplicado < 0){
             throw new RuntimeException("Desconto nao pode ser negativo");

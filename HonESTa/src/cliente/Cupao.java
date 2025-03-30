@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comercio.ProdutoInfo;
+import util.GeradorId;
 
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
@@ -14,51 +15,35 @@ import comercio.ProdutoInfo;
 public class Cupao {
     private final String id;
     private final String descricao;
-    private final byte desconto;
+    private final float desconto;
     private final LocalDate inicio;
     private final LocalDate validade;
     private List <ProdutoInfo> produtos;
 
-    public Cupao(String id, String descricao, byte desconto, LocalDate validade,
-        List<ProdutoInfo> produtos) {
-
+    public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<ProdutoInfo> produtos) {
         verificarId(id);
         this.id = id;
 
         verificarDescricao(descricao);
         this.descricao = descricao;
 
-        verificarCupao(desconto);
+        verificarDesconto(desconto);
         this.desconto = desconto;
 
-        verificarValidade(validade);
-        this.validade = validade;
+        //verificarValidade(validade);
+        this.validade = LocalDate.now().plusDays(validade);
 
         verificarProdutos(produtos);
         this.produtos = produtos;
 
-        this.inicio = LocalDate.now();
+        //verificarInicio(inicio);
+        this.inicio = LocalDate.now().plusDays(inicio);
     }
 
-    public Cupao(String id, String descricao, byte desconto, LocalDate validade,
-                 List<ProdutoInfo> produtos, LocalDate inicio) {
-        verificarId(id);
-        this.id = id;
-
-        verificarDescricao(descricao);
-        this.descricao = descricao;
-
-        verificarCupao(desconto);
-        this.desconto = desconto;
-
-        verificarValidade(validade);
-        this.validade = validade;
-
-        verificarProdutos(produtos);
-        this.produtos = produtos;
-
-        verificarInicio(inicio);
-        this.inicio = inicio;
+    private void verificarDesconto(float desconto) {
+        if (desconto <= 0 || desconto >= 1) {
+            throw new IllegalArgumentException("O desconto não pode ser negativo ou igual a 0 ou maior ou igual que 1");
+        }
     }
 
     private void verificarInicio(LocalDate inicio) {
@@ -77,12 +62,6 @@ public class Cupao {
     public void verificarDescricao(String descricao) {
         if (descricao == null || descricao.isBlank()) {
             throw new IllegalArgumentException("A descrição não pode ser vazia ou nula!");
-        }
-    }
-
-    public void verificarCupao(byte desconto) {
-        if (desconto <= 0 || desconto >= 100) {
-            throw new IllegalArgumentException("O desconto não pode ser negativo ou igual a 0 ou maior ou igual que 100!");
         }
     }
 
@@ -108,8 +87,12 @@ public class Cupao {
         return descricao;
     }
 
-    public byte getDesconto() {
+    public float getDesconto() {
         return desconto;
+    }
+
+    public LocalDate getInicio(){
+        return inicio;
     }
 
     public LocalDate getValidade() {
@@ -131,11 +114,11 @@ public class Cupao {
     }
 
     public boolean estaValido() {
-        return validade.isBefore(LocalDate.now());
+        return (LocalDate.now().isBefore(validade) || LocalDate.now().equals(validade));
     }
 
     public boolean estaValido(LocalDate data) {
-        return data.isBefore(validade) || data.equals(validade);
+        return (data.isBefore(validade) || data.equals(validade));
     }
 
     /**
@@ -176,7 +159,7 @@ public class Cupao {
      * @param produto o produto a ser usado
      */
     private void aplicar(Cartao cartao, ProdutoVendido produto) {
-        produto.setDescontoAplicado(desconto);
-        cartao.acumularSaldo(desconto);
+        produto.setDescontoAplicado((long)(produto.getPreco() * desconto));
+        cartao.acumularSaldo((long)(produto.getPreco() * desconto));
     }
 }

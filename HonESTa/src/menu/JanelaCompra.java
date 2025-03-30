@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import cliente.Cartao;
+import cliente.ProdutoVendido;
 import cliente.Venda;
 import comercio.Inventario;
 import comercio.ProdutoInfo;
@@ -52,8 +53,7 @@ public class JanelaCompra extends JFrame {
 
     // a venda atual, isto é, a venda que está a ser feita neste momento. Assim que
     // se terminar uma venda, outra é começada de imediato.
-    // TODO criar uma nova venda assim que se inicia
-    private Venda vendaAtual = null;
+    private Venda vendaAtual = new Venda();
 
     /**
      * Cria a janela de simulação de uma caixa.
@@ -73,11 +73,9 @@ public class JanelaCompra extends JFrame {
      * @param p o produto identificado pelo leitor de códigos de barras
      */
     private void adicionarProdutoVenda(ProdutoInfo p) {
-        // TODO adicionar o produto vendido à venda
+        vendaAtual.adicionarProduto(new ProdutoVendido(p));
 
-        // TODO atualizar o total
-        long total = 0;
-        atualizarPrecoTotal(total);
+        atualizarPrecoTotal(vendaAtual.getTotalCompra());
     }
 
     /**
@@ -86,27 +84,24 @@ public class JanelaCompra extends JFrame {
      * @param c o cartão a usar na compra
      */
     private void pagarComCartao(Cartao c) {
-        // TODO ver se o cartão esta ativo antes de proceder ao pagamento
-        if (Math.abs(2) == 2) {
+        if (!c.estaAtivo()) {
             JOptionPane.showMessageDialog(this, "Por favor, ative cartão na aplicação!");
             return;
         }
 
-        // TODO colocar a informação certa nas variáveis
-        long saldoCartao = 0;
-        int numeroCupoesUsados = 0;
-        long totalVenda = 0;
+        long saldoCartao = c.getSaldo();
+        int numeroCupoesUsados = c.getCupoesUsados().size();
+        long totalVenda = vendaAtual.getTotalCompra();
 
         if (saldoCartao > 0) {
             int opcao = JOptionPane.showConfirmDialog(this,
                     "Deseja usar o saldo de " + precoToString(saldoCartao) + "?", "Usar saldo",
                     JOptionPane.YES_NO_OPTION);
-            // TODO se quer usar o saldo é preciso gastá-lo
             if (opcao == JOptionPane.YES_OPTION)
-                c.reduzirSaldo(0);
+                c.reduzirSaldo(totalVenda);
         }
 
-        // TODO usar o cartão na compra
+        c.usar(vendaAtual);
 
         // apresentar a mensagem de agradecimento
         String mensagem = "<html>Obrigado pela sua compra de " + precoToString(totalVenda);
@@ -116,8 +111,7 @@ public class JanelaCompra extends JFrame {
             mensagem += "<br>Usou " + numeroCupoesUsados + " cupão.";
         JOptionPane.showMessageDialog(this, mensagem);
 
-        // TODO criar uma nova venda
-        vendaAtual = null;
+        vendaAtual = new Venda();
 
         // atualizar a lista das vendas
         vendaModel.clear();
@@ -131,8 +125,7 @@ public class JanelaCompra extends JFrame {
      * @return o preço do produto
      */
     private long getPrecoProduto(ProdutoInfo p) {
-        // TODO retornar o valor certo
-        return 0;
+        return p.getPrecoAtual();
     }
 
     /**
@@ -142,8 +135,7 @@ public class JanelaCompra extends JFrame {
      * @return uma string que indica a marca do produto
      */
     private String getMarcaProduto(ProdutoInfo p) {
-        // TODO substituir o texto pelo valor certo
-        return "MARCA";
+        return p.getMarca();
     }
 
     /**
@@ -153,8 +145,7 @@ public class JanelaCompra extends JFrame {
      * @return uma string que indica o modelo do produto
      */
     private String getModeloProduto(ProdutoInfo p) {
-        // TODO substituir o texto pelo valor certo
-        return "MODELO";
+        return p.getModelo();
     }
 
     /**
@@ -166,8 +157,7 @@ public class JanelaCompra extends JFrame {
                 boolean cellHasFocus) {
             Cartao c = (Cartao) value; // o cartão a ser desenhado
 
-            // TODO colocar a informação certa na variável
-            String numeroCartao = "1234";
+            String numeroCartao = c.getId();
 
             return super.getListCellRendererComponent(list, numeroCartao, index, isSelected, cellHasFocus);
         }
@@ -182,12 +172,8 @@ public class JanelaCompra extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(LARGURA_JANELA, ALTURA_JANELA);
         setResizable(false);
-        // TODO passar a coleção de produtos (java.util.List.of() só está a criar uma
-        // lista vazia)
-        JPanel inventario = setupInventario(java.util.List.of());
-        // TODO passar a coleção de cartões (java.util.List.of() só está a criar uma
-        // lista vazia)
-        JPanel compra = setupCompra(java.util.List.of());
+        JPanel inventario = setupInventario(inv.getStockProdutos());
+        JPanel compra = setupCompra(inv.getCartoes());
         getContentPane().add(inventario, BorderLayout.CENTER);
         getContentPane().add(compra, BorderLayout.WEST);
     }

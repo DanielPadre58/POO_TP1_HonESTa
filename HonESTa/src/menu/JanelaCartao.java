@@ -74,13 +74,12 @@ public class JanelaCartao extends JFrame {
      */
     public void mudarCartao(Cartao c) {
         cardAtual = c;
-        // TODO é preciso atualizar os cupões
+
         c.atualizarCupoes();
 
-        // TODO é preciso colocar a informação certa nas variáveis
-        long saldo = 0;
-        List<Cupao> cupoesAtuais = List.of();
-        List<Cupao> cupoesFuturos = List.of();
+        long saldo = c.getSaldo();
+        List<Cupao> cupoesAtuais = c.getCupoesDisponiveis();
+        List<Cupao> cupoesFuturos = c.getCupoesFuturos();
 
         updateSaldo(saldo);
         updateCupoesAtuais(cupoesAtuais);
@@ -96,11 +95,10 @@ public class JanelaCartao extends JFrame {
      * @param cupao          o cupao do qual se pretendem os dados
      */
     public void desenharCupao(Graphics g, RendererCupoes rendererCupoes, Cupao cupao) {
-        // TODO colocar os dados certos nas variáveis
-        String resumo = "resumo";
-        float desconto = 0.01f;
-        LocalDate comeca = LocalDate.now();
-        LocalDate acaba = LocalDate.now();
+        String resumo = cupao.getDescricao();
+        float desconto = cupao.getDesconto();
+        LocalDate comeca = cupao.getInicio();
+        LocalDate acaba = cupao.getValidade();
 
         // fazer o desenho da informação
         rendererCupoes.paintDadosCupao(g, resumo, desconto, comeca, acaba);
@@ -113,7 +111,7 @@ public class JanelaCartao extends JFrame {
      * @param cupoesSelecionados lista com os cupões selecionados para ativar
      */
     private void ativarCartao(List<Cupao> cupoesSelecionados) {
-        // TODO ativar o cartão com os cupões selecionados
+        cardAtual.ativar(cupoesSelecionados);
 
         // mostrar a mensagem de que se está à espera de usar o cartão
         mostrarMensagem("Pode usar o cartão", "Cartão ativo");
@@ -132,8 +130,7 @@ public class JanelaCartao extends JFrame {
                 boolean cellHasFocus) {
             Cartao c = (Cartao) value;
 
-            // TODO colocar a informação certa na variável
-            String numero = "1233";
+            String numero = c.getId();
             return super.getListCellRendererComponent(list, numero, index, isSelected, cellHasFocus);
         }
     }

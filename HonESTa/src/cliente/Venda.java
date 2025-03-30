@@ -1,5 +1,7 @@
 package cliente;
 
+import comercio.ProdutoInfo;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,6 +13,11 @@ public class Venda {
     private LocalDate dataVenda;
     private ArrayList<ProdutoVendido> produtosVendidos;
     private ArrayList<Cupao> cupoesUsados;
+    private long totalCompra;
+
+    public long getTotalCompra() {
+        return totalCompra;
+    }
 
     public LocalDate getDataVenda() {
         return dataVenda;
@@ -36,13 +43,11 @@ public class Venda {
     }
 
     public Venda(LocalDate dataVenda, ArrayList<ProdutoVendido> produtosVendidos) {
-        verificarDataVenda(dataVenda);
-        this.dataVenda = dataVenda;
+        this(dataVenda, produtosVendidos, new ArrayList<>());
+    }
 
-        verificarProdutosVendidos(produtosVendidos);
-        this.produtosVendidos = produtosVendidos;
-
-        this.cupoesUsados = new ArrayList<>();
+    public Venda(){
+        this(LocalDate.now(), new ArrayList<>(), new ArrayList<>());
     }
 
     private void verificarCupoesUsados(ArrayList<Cupao> cupoesUsados) {
@@ -65,5 +70,10 @@ public class Venda {
 
     public boolean foiUsado(Cupao cupao) {
         return cupoesUsados.contains(cupao);
+    }
+
+    public void adicionarProduto(ProdutoVendido produto) {
+        produtosVendidos.add(produto);
+        totalCompra += produto.getPreco();
     }
 }

@@ -1,5 +1,7 @@
 package cliente;
 
+import util.GeradorId;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,36 +15,38 @@ public class Cartao {
     private long saldo;
     private HashMap<Cupao, Boolean> cupoes;
     private boolean estaAtivo;
+    private List<Cupao> cupoesUsados = new ArrayList<>();
 
     public String getId() {
         return id;
     }
 
+    public long getSaldo() {
+        return saldo;
+    }
+
+    public List<Cupao> getCupoesUsados(){
+        return cupoesUsados;
+    }
+
     public Cartao(String id, long saldo, List<Cupao> cupoes) {
+        verificarId(id);
         this.id = id;
 
         verificarSaldo(saldo);
         this.saldo = saldo;
 
         verificarCupoes(cupoes);
+        this.cupoes = new HashMap<>();
         for (Cupao cupao : cupoes) {
             this.cupoes.put(cupao, false);
         }
     }
 
-    public Cartao(String id) {
-        this.id = id;
-        this.saldo = 0;
-        this.cupoes = new HashMap<>();
-    }
-
-    public Cartao(String id, long saldo) {
-        this.id = id;
-
-        verificarSaldo(saldo);
-        this.saldo = saldo;
-
-        this.cupoes = new HashMap<>();
+    public void verificarId(String id) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("O id não pode ser vazio ou nulo!");
+        }
     }
 
     private void verificarCupoes(List<Cupao> cupoes) {
@@ -65,9 +69,12 @@ public class Cartao {
      * @param ativos lista de cupões para ativar
      */
     public void ativar(List<Cupao> ativos) {
-        for (Cupao cupao : ativos) {
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
             cupoes.replace(cupao, true);
-        }
+        });
+
+        estaAtivo = true;
     }
 
     /**
@@ -84,13 +91,15 @@ public class Cartao {
             throw new IllegalStateException("Nao pode usar um carto que nao foi ativo");
         }
 
-        for (Cupao cupao : cupoes.keySet()) {
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
             if(cupoes.get(cupao) && v.foiUsado(cupao)) {
                 if(cupao.aplicar(this, v)){
+                    cupoesUsados.add(cupao);
                     cupoes.remove(cupao);
                 }
             }
-        }
+        });
 
         estaAtivo = false;
     }
@@ -103,11 +112,11 @@ public class Cartao {
      */
     public List<Cupao> getCupoesDisponiveis() {
         List<Cupao> cupoesDisponiveis = new ArrayList<>();
-        for(Cupao cupao : cupoes.keySet()) {
-            if(cupao.estaValido(LocalDate.now())){
+        cupoes.forEach((Cupao cupao, Boolean ativo) ->{
+            if(cupao.estaValido() && !cupao.eFuturo()){
                 cupoesDisponiveis.add(cupao);
             }
-        }
+        });
 
         return cupoesDisponiveis;
     }
@@ -120,11 +129,11 @@ public class Cartao {
      */
     public List<Cupao> getCupoesFuturos() {
         List<Cupao> cupoesFuturos = new ArrayList<>();
-        for(Cupao cupao : cupoes.keySet()) {
+        cupoes.forEach((Cupao cupao, Boolean ativo) ->{
             if(cupao.eFuturo()){
                 cupoesFuturos.add(cupao);
             }
-        }
+        });
 
         return cupoesFuturos;
     }
@@ -133,11 +142,12 @@ public class Cartao {
      * Atualiza os cupões, removendo os que já passaram de validade
      */
     public void atualizarCupoes() {
-        for(Cupao cupao : cupoes.keySet()) {
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        cupoesPlaceHolder.forEach((Cupao cupao, Boolean ativo) ->{
             if(!cupao.estaValido()){
                 cupoes.remove(cupao);
             }
-        }
+        });
     }
 
     /**
