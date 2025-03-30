@@ -16,6 +16,18 @@ public class Inventario {
     List<Cartao> cartoes;
     List<Cupao> cupoesEmpresa;
 
+    public List<Cartao> getCartoes() {
+        return cartoes;
+    }
+
+    public List<ProdutoInfo> getStockProdutos() {
+        return stockProdutos;
+    }
+
+    public List<Cupao> getCupoesEmpresa() {
+        return cupoesEmpresa;
+    }
+
     public Inventario(List<ProdutoInfo> stockProdutos, List<Cartao> cartoes, List<Cupao> cupoesEmpresa) {
         verificarProdutos(stockProdutos);
         this.stockProdutos = new ArrayList<>();
@@ -99,5 +111,17 @@ public class Inventario {
         }
 
         return null;
+    }
+
+    public void adicionarProduto(ProdutoInfo produto) {
+        stockProdutos.add(produto);
+    }
+
+    public void adicionarCartao(Cartao cartao) {
+        cartoes.add(cartao);
+    }
+
+    public void adicionarCupao(Cupao cupao) {
+        cupoesEmpresa.add(cupao);
     }
 }
