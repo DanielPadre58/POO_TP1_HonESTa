@@ -1,8 +1,5 @@
 package cliente;
 
-import util.GeradorId;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +90,7 @@ public class Cartao {
 
         HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
         cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
-            if(cupoes.get(cupao) && v.foiUsado(cupao)) {
+            if(cupoes.get(cupao) && !v.foiUsado(cupao)) {
                 if(cupao.aplicar(this, v)){
                     cupoesUsados.add(cupao);
                     cupoes.remove(cupao);

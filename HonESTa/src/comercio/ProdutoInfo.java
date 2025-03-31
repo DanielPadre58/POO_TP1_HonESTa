@@ -1,14 +1,12 @@
 package comercio;
 
-import util.GeradorId;
-
 public class ProdutoInfo {
     private final String codigoBarras, marca, modelo;
     private long precoAtual;
 
     public ProdutoInfo(String codigoBarras, String marca, String modelo, long precoAtual) {
         verficarCodigoDeBarras(codigoBarras);
-        this.codigoBarras = GeradorId.geradorCodigoBarras();
+        this.codigoBarras = codigoBarras;
 
         verificarMarca(marca);
         this.marca = marca;

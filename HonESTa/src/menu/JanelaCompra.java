@@ -98,7 +98,7 @@ public class JanelaCompra extends JFrame {
                     "Deseja usar o saldo de " + precoToString(saldoCartao) + "?", "Usar saldo",
                     JOptionPane.YES_NO_OPTION);
             if (opcao == JOptionPane.YES_OPTION)
-                c.reduzirSaldo(totalVenda);
+                c.reduzirSaldo(totalVenda);  // VERIFICAR ISTO
         }
 
         c.usar(vendaAtual);
@@ -114,6 +114,7 @@ public class JanelaCompra extends JFrame {
         vendaAtual = new Venda();
 
         // atualizar a lista das vendas
+        atualizarPrecoTotal(000);
         vendaModel.clear();
     }
 

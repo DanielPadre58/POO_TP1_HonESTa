@@ -1,9 +1,6 @@
 package arranque;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -13,7 +10,6 @@ import comercio.Inventario;
 import comercio.ProdutoInfo;
 import menu.JanelaCartao;
 import menu.JanelaCompra;
-import util.GeradorId;
 
 public class Main {
 

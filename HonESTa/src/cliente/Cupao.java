@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comercio.ProdutoInfo;
-import util.GeradorId;
 
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
@@ -43,12 +42,6 @@ public class Cupao {
     private void verificarDesconto(float desconto) {
         if (desconto <= 0 || desconto >= 1) {
             throw new IllegalArgumentException("O desconto não pode ser negativo ou igual a 0 ou maior ou igual que 1");
-        }
-    }
-
-    private void verificarInicio(LocalDate inicio) {
-        if(inicio == null) {
-            throw new IllegalArgumentException("Data de inicio nao pode ser nula!");
         }
     }
 
@@ -130,13 +123,14 @@ public class Cupao {
      * @param venda a venda a ser processada
      * @return true se o cupão foi aplicado na venda
      */
+
     public boolean aplicar(Cartao cartao, Venda venda) {
         for(ProdutoVendido produto : venda.getProdutosVendidos()) {
             if(abrange(produto) && produto.getDescontoAplicado() < desconto) {
                 aplicar(cartao, produto);
+                //return true;
             }
         }
-
         return false;
     }
 
