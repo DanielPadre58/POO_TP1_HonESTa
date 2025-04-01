@@ -124,14 +124,17 @@ public class Cupao {
      * @return true se o cupão foi aplicado na venda
      */
 
+    //🤓☝️
     public boolean aplicar(Cartao cartao, Venda venda) {
+        boolean umAplicado = false;
         for(ProdutoVendido produto : venda.getProdutosVendidos()) {
-            if(abrange(produto) && produto.getDescontoAplicado() < desconto) {
+            if(abrange(produto)) {
                 aplicar(cartao, produto);
-                //return true;
+                umAplicado = true;
             }
         }
-        return false;
+
+        return umAplicado;
     }
 
     /**
@@ -143,7 +146,7 @@ public class Cupao {
      * @return true, se o produto é abrangido pela cupão
      */
     public boolean abrange(ProdutoVendido produto) {
-        return produtos.contains(produto.getProduto());
+        return produtos.contains(produto.getProduto()) && produto.getDescontoAplicado() < desconto;
     }
 
     /**
@@ -153,7 +156,7 @@ public class Cupao {
      * @param produto o produto a ser usado
      */
     private void aplicar(Cartao cartao, ProdutoVendido produto) {
-        produto.setDescontoAplicado((long)(produto.getPreco() * desconto));
+        produto.setDescontoAplicado(desconto);
         cartao.acumularSaldo((long)(produto.getPreco() * desconto));
     }
 }

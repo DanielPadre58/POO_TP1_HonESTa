@@ -76,4 +76,8 @@ public class Venda {
         produtosVendidos.add(produto);
         totalCompra += produto.getPreco();
     }
+
+    public void adicionarCupaoUsado(Cupao cupao) {
+        cupoesUsados.add(cupao);
+    }
 }

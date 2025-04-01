@@ -115,6 +115,7 @@ public class JanelaCartao extends JFrame {
 
         // mostrar a mensagem de que se está à espera de usar o cartão
         mostrarMensagem("Pode usar o cartão", "Cartão ativo");
+        cardAtual.desativar();
 
         // no fim de mostrar a mensagem, atualizar a informação toda do cartão, pois
         // podem ter sido removidos cupões e o saldo também pode ter sofrido alterações

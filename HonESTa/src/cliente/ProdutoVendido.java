@@ -11,7 +11,7 @@ import comercio.ProdutoInfo;
 public class ProdutoVendido {
     final private ProdutoInfo produto;
     final private long preco;
-    private long descontoAplicado;
+    private float descontoAplicado;
 
     public ProdutoInfo getProduto() {
         return produto;
@@ -21,11 +21,11 @@ public class ProdutoVendido {
         return preco;
     }
 
-    public long getDescontoAplicado() {
+    public float getDescontoAplicado() {
         return descontoAplicado;
     }
 
-    public void setDescontoAplicado(long descontoAplicado) {
+    public void setDescontoAplicado(float descontoAplicado) {
         this.descontoAplicado = descontoAplicado;
     }
 

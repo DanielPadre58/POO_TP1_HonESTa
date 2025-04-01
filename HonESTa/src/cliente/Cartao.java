@@ -12,7 +12,6 @@ public class Cartao {
     private long saldo;
     private HashMap<Cupao, Boolean> cupoes;
     private boolean estaAtivo;
-    private List<Cupao> cupoesUsados = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -20,10 +19,6 @@ public class Cartao {
 
     public long getSaldo() {
         return saldo;
-    }
-
-    public List<Cupao> getCupoesUsados(){
-        return cupoesUsados;
     }
 
     public Cartao(String id, long saldo, List<Cupao> cupoes) {
@@ -67,11 +62,20 @@ public class Cartao {
      */
     public void ativar(List<Cupao> ativos) {
         HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
-        cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
+        for (Cupao cupao : ativos) {
             cupoes.replace(cupao, true);
-        });
+        }
 
         estaAtivo = true;
+    }
+
+    public void desativar(){
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
+            cupoes.replace(cupao, false);
+        });
+
+        estaAtivo = false;
     }
 
     /**
@@ -92,8 +96,13 @@ public class Cartao {
         cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
             if(cupoes.get(cupao) && !v.foiUsado(cupao)) {
                 if(cupao.aplicar(this, v)){
-                    cupoesUsados.add(cupao);
-                    cupoes.remove(cupao);
+                    v.adicionarCupaoUsado(cupao);
+                }
+            }
+
+            for(Cupao cupaoRemover : v.getCupoesUsados()){
+                if(cupoes.containsKey(cupaoRemover)){
+                    cupoes.remove(cupaoRemover);
                 }
             }
         });
@@ -153,12 +162,7 @@ public class Cartao {
      * @param gasto o que retirar do saldo.
      */
     public void reduzirSaldo(long gasto) {
-        if(gasto > saldo){
-            saldo = 0;
-            return;
-        }
-
-        saldo -= gasto;
+        saldo = saldo - gasto < 0 ? 0 : saldo - gasto;
     }
 
     /**

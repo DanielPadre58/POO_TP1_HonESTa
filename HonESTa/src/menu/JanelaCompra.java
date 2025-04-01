@@ -90,7 +90,6 @@ public class JanelaCompra extends JFrame {
         }
 
         long saldoCartao = c.getSaldo();
-        int numeroCupoesUsados = c.getCupoesUsados().size();
         long totalVenda = vendaAtual.getTotalCompra();
 
         if (saldoCartao > 0) {
@@ -102,6 +101,7 @@ public class JanelaCompra extends JFrame {
         }
 
         c.usar(vendaAtual);
+        int numeroCupoesUsados = vendaAtual.getCupoesUsados().size();
 
         // apresentar a mensagem de agradecimento
         String mensagem = "<html>Obrigado pela sua compra de " + precoToString(totalVenda);
