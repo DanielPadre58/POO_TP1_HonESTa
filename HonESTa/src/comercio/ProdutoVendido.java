@@ -1,5 +1,9 @@
 package comercio;
 
+import util.Validator;
+
+import java.util.Objects;
+
 /**
  * Representa um produto vendido numa compra. Atenção, esta classe não contém a
  * informação sobre o produto propriamente dito (para isso usa um ProdutoInfo),
@@ -28,14 +32,11 @@ public class ProdutoVendido {
     }
 
     public ProdutoVendido(Produto produto, long preco, long descontoAplicado) {
-        validarProduto(produto);
-        this.produto = produto;
+        this.produto = Objects.requireNonNull(produto);
 
-        validarPreco(preco);
-        this.preco = preco;
+        this.preco = Validator.requirePositive(preco);
 
-        validarDesconto(descontoAplicado);
-        this.descontoAplicado = descontoAplicado;
+        this.descontoAplicado = Validator.requirePositiveOrZero(descontoAplicado);
     }
 
     public ProdutoVendido(Produto produto, long preco) {
@@ -43,29 +44,10 @@ public class ProdutoVendido {
     }
 
     public ProdutoVendido(Produto produto) {
-        validarProduto(produto);
-        this.produto = produto;
+        this.produto = Objects.requireNonNull(produto);
 
         this.preco = produto.getPrecoAtual();
 
         this.descontoAplicado = 0;
-    }
-
-    private void validarDesconto(long descontoAplicado) {
-        if(descontoAplicado < 0){
-            throw new RuntimeException("Desconto nao pode ser negativo");
-        }
-    }
-
-    private void validarPreco(long preco) {
-        if(preco <= 0){
-            throw new IllegalArgumentException("Preco do produto deve ser maior que zero");
-        }
-    }
-
-    private void validarProduto(Produto produto) {
-        if(produto == null) {
-            throw new IllegalArgumentException("Produto vendido nao pode ser nulo");
-        }
     }
 }

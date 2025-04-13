@@ -1,21 +1,19 @@
 package comercio;
 
+import util.Validator;
+
 public class Produto {
     private final String codigoBarras, marca, modelo;
     private long precoAtual;
 
     public Produto(String codigoBarras, String marca, String modelo, long precoAtual) {
-        verficarCodigoDeBarras(codigoBarras);
-        this.codigoBarras = codigoBarras;
+        this.codigoBarras = Validator.requireNonBlank(codigoBarras);
 
-        verificarMarca(marca);
-        this.marca = marca;
+        this.marca = Validator.requireNonBlank(marca);
 
-        verificarModelo(modelo);
-        this.modelo = modelo;
+        this.modelo = Validator.requireNonBlank(modelo);
 
-        verificarPreco(precoAtual);
-        this.precoAtual = precoAtual;
+        this.precoAtual = Validator.requirePositive(precoAtual);
     }
 
     // Getters
@@ -39,33 +37,6 @@ public class Produto {
     // Setters
 
     public void alterarPreco(long precoAtual) {
-        verificarPreco(precoAtual);
-        this.precoAtual = precoAtual;
-    }
-
-    // Verificações
-
-    private void verficarCodigoDeBarras(String codigoBarras) {
-        if(codigoBarras == null || codigoBarras.isBlank()) {
-            throw new IllegalArgumentException("Codigo de barras nao pode ser vazio");
-        }
-    }
-
-    public void verificarPreco(long precoAtual) {
-        if (precoAtual <= 0) {
-            throw new IllegalArgumentException("O preço não pode ser negativo ou zero!");
-        }
-    }
-
-    public void verificarMarca(String marca) {
-        if (marca == null || marca.isBlank()) {
-            throw new IllegalArgumentException("A marca não pode ser vazia ou nulo!");
-        }
-    }
-
-    public void verificarModelo(String modelo) {
-        if (modelo == null || modelo.isBlank()) {
-            throw new IllegalArgumentException("O modelo não pode ser vazia ou nulo!");
-        }
+        this.precoAtual = Validator.requirePositive(precoAtual);
     }
 }

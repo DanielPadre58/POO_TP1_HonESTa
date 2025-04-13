@@ -3,9 +3,11 @@ package loja;
 import cliente.Cartao;
 import cliente.Cupao;
 import comercio.Produto;
+import util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe que representa o inventário da empresa, desde os produtos, até aos
@@ -30,14 +32,11 @@ public class Inventario {
     }
 
     public Inventario(List<Produto> stockProdutos, List<Cartao> cartoes, List<Cupao> cupoesEmpresa) {
-        verificarProdutos(stockProdutos);
-        this.stockProdutos = new ArrayList<>();
+        this.stockProdutos = Objects.requireNonNull(stockProdutos);
 
-        verificarCartoes(cartoes);
-        this.cartoes = cartoes;
+        this.cartoes = Objects.requireNonNull(cartoes);
 
-        verificarCupoes(cupoesEmpresa);
-        this.cupoesEmpresa = cupoesEmpresa;
+        this.cupoesEmpresa = Objects.requireNonNull(cupoesEmpresa);
     }
 
     public Inventario(List<Produto> stockProdutos) {
@@ -46,24 +45,6 @@ public class Inventario {
 
     public Inventario() {
         this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-    }
-
-    private void verificarCupoes(List<Cupao> cupoes) {
-        if(cupoes == null) {
-            throw new IllegalArgumentException("A lista de cupoes da empresa nao deve ser nula!");
-        }
-    }
-
-    private void verificarProdutos(List<Produto> stockProdutos) {
-        if(stockProdutos == null) {
-            throw new IllegalArgumentException("A lista de produtos em stock nao deve ser nula!");
-        }
-    }
-
-    private void verificarCartoes(List<Cartao> cartoes) {
-        if(cartoes == null) {
-            throw new IllegalArgumentException("A lista de cartoes nao deve ser nula!");
-        }
     }
 
     /**
@@ -115,14 +96,14 @@ public class Inventario {
     }
 
     public void adicionarProduto(Produto produto) {
-        stockProdutos.add(produto);
+        stockProdutos.add(Objects.requireNonNull(produto));
     }
 
     public void adicionarCartao(Cartao cartao) {
-        cartoes.add(cartao);
+        cartoes.add(Objects.requireNonNull(cartao));
     }
 
     public void adicionarCupao(Cupao cupao) {
-        cupoesEmpresa.add(cupao);
+        cupoesEmpresa.add(Objects.requireNonNull(cupao));
     }
 }

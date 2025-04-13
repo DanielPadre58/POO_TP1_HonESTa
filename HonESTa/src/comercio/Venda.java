@@ -1,9 +1,11 @@
 package comercio;
 
 import cliente.Cupao;
+import util.Validator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Classe responsável por armazenar os produtos vendidos numa venda. Tem a data
@@ -32,14 +34,11 @@ public class Venda {
     }
 
     public Venda(LocalDate dataVenda, ArrayList<ProdutoVendido> produtosVendidos, ArrayList<Cupao> cupoesUsados) {
-        verificarDataVenda(dataVenda);
-        this.dataVenda = dataVenda;
+        this.dataVenda = Objects.requireNonNull(dataVenda);
 
-        verificarProdutosVendidos(produtosVendidos);
-        this.produtosVendidos = produtosVendidos;
+        this.produtosVendidos = Objects.requireNonNull(produtosVendidos);
 
-        verificarCupoesUsados(cupoesUsados);
-        this.cupoesUsados = cupoesUsados;
+        this.cupoesUsados = Objects.requireNonNull(cupoesUsados);
     }
 
     public Venda(LocalDate dataVenda, ArrayList<ProdutoVendido> produtosVendidos) {
@@ -50,34 +49,16 @@ public class Venda {
         this(LocalDate.now(), new ArrayList<>(), new ArrayList<>());
     }
 
-    private void verificarCupoesUsados(ArrayList<Cupao> cupoesUsados) {
-        if(cupoesUsados == null){
-            throw new IllegalArgumentException("Lista de cupoes usado nao pode ser nula");
-        }
-    }
-
-    private void verificarProdutosVendidos(ArrayList<ProdutoVendido> produtosVendidos) {
-        if (produtosVendidos == null) {
-            throw new IllegalArgumentException("Lista de produtos vendidos nao deve ser nula");
-        }
-    }
-
-    private void verificarDataVenda(LocalDate dataVenda) {
-        if(dataVenda == null){
-            throw new IllegalArgumentException("Data de venda nao deve ser nula");
-        }
-    }
-
     public boolean foiUsado(Cupao cupao) {
         return cupoesUsados.contains(cupao);
     }
 
     public void adicionarProduto(ProdutoVendido produto) {
-        produtosVendidos.add(produto);
+        produtosVendidos.add(Objects.requireNonNull(produto));
         totalCompra += produto.getPreco();
     }
 
     public void adicionarCupaoUsado(Cupao cupao) {
-        cupoesUsados.add(cupao);
+        cupoesUsados.add(Objects.requireNonNull(cupao));
     }
 }

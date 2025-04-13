@@ -1,10 +1,12 @@
 package cliente;
 
 import comercio.Venda;
+import util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe que representa um cartão de fidelização na cadeia de lojas HonESta.
@@ -24,35 +26,13 @@ public class Cartao {
     }
 
     public Cartao(String id, long saldo, List<Cupao> cupoes) {
-        verificarId(id);
-        this.id = id;
+        this.id = Validator.requireNonBlank(id);
 
-        verificarSaldo(saldo);
-        this.saldo = saldo;
+        this.saldo = Validator.requirePositiveOrZero(saldo);
 
-        verificarCupoes(cupoes);
         this.cupoes = new HashMap<>();
-        for (Cupao cupao : cupoes) {
+        for (Cupao cupao : Objects.requireNonNull(cupoes)) {
             this.cupoes.put(cupao, false);
-        }
-    }
-
-    public void verificarId(String id) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("O id não pode ser vazio ou nulo!");
-        }
-    }
-
-    private void verificarCupoes(List<Cupao> cupoes) {
-        if(cupoes == null){
-            throw new IllegalArgumentException("A lista de cupoes nao deve ser nula");
-        }
-    }
-
-
-    private void verificarSaldo(long saldo) {
-        if(saldo < 0){
-            throw new IllegalArgumentException("Saldo deve ser maior que zero");
         }
     }
 

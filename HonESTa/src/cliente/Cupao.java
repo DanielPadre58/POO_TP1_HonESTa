@@ -3,10 +3,12 @@ package cliente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import comercio.Produto;
 import comercio.ProdutoVendido;
 import comercio.Venda;
+import util.Validator;
 
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
@@ -22,54 +24,17 @@ public class Cupao {
     private List <Produto> produtos;
 
     public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<Produto> produtos) {
-        verificarId(id);
-        this.id = id;
+        this.id = Validator.requireNonBlank(id);
 
-        verificarDescricao(descricao);
-        this.descricao = descricao;
+        this.descricao = Validator.requireNonBlank(descricao);
 
-        verificarDesconto(desconto);
-        this.desconto = desconto;
+        this.desconto = Validator.requireInsideRange(desconto, 0, 1);
 
-        //verificarValidade(validade);
-        this.validade = LocalDate.now().plusDays(validade);
+        this.validade = LocalDate.now().plusDays(Validator.requirePositive(validade));
 
-        verificarProdutos(produtos);
-        this.produtos = produtos;
+        this.inicio = LocalDate.now().plusDays(Validator.requirePositive(inicio));
 
-        //verificarInicio(inicio);
-        this.inicio = LocalDate.now().plusDays(inicio);
-    }
-
-    private void verificarDesconto(float desconto) {
-        if (desconto <= 0 || desconto >= 1) {
-            throw new IllegalArgumentException("O desconto não pode ser negativo ou igual a 0 ou maior ou igual que 1");
-        }
-    }
-
-    // Verificações
-    public void verificarId(String id) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("O id não pode ser vazio ou nulo!");
-        }
-    }
-
-    public void verificarDescricao(String descricao) {
-        if (descricao == null || descricao.isBlank()) {
-            throw new IllegalArgumentException("A descrição não pode ser vazia ou nula!");
-        }
-    }
-
-    public void verificarValidade(LocalDate validade) {
-        if (validade == null || validade.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("A validade não pode ser nula ou anterior a de hoje!");
-        }
-    }
-
-    public void verificarProdutos(List<Produto> produtos) {
-        if (produtos == null || produtos.isEmpty()) {
-            throw new IllegalArgumentException("A lista de produtos não pode ser vazia ou nula!");
-        }
+        this.produtos = Objects.requireNonNull(produtos);
     }
 
     // Getters
@@ -101,7 +66,7 @@ public class Cupao {
     // Setters
 
     public void setProdutos(ArrayList<Produto> produtos) {
-        this.produtos = produtos;
+        this.produtos = Objects.requireNonNull(produtos);
     }
 
     public boolean eFuturo(){
