@@ -1,4 +1,6 @@
-package cliente;
+package comercio;
+
+import cliente.Cupao;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

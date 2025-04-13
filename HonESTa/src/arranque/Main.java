@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import cliente.Cartao;
 import cliente.Cupao;
-import comercio.Inventario;
+import loja.Inventario;
 import comercio.Product;
 import menu.JanelaCartao;
 import menu.JanelaCompra;

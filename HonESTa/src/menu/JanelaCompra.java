@@ -27,9 +27,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import cliente.Cartao;
-import cliente.ProdutoVendido;
-import cliente.Venda;
-import comercio.Inventario;
+import comercio.ProdutoVendido;
+import comercio.Venda;
+import loja.Inventario;
 import comercio.Product;
 
 /**

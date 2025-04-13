@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comercio.Product;
+import comercio.ProdutoVendido;
+import comercio.Venda;
 
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
@@ -126,15 +128,15 @@ public class Cupao {
 
     //🤓☝️
     public boolean aplicar(Cartao cartao, Venda venda) {
-        boolean umAplicado = false;
+        boolean aplicadoEmPeloMenosUm = false;
         for(ProdutoVendido produto : venda.getProdutosVendidos()) {
             if(abrange(produto)) {
                 aplicar(cartao, produto);
-                umAplicado = true;
+                aplicadoEmPeloMenosUm = true;
             }
         }
 
-        return umAplicado;
+        return aplicadoEmPeloMenosUm;
     }
 
     /**

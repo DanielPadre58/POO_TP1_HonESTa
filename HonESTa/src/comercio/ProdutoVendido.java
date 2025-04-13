@@ -1,6 +1,4 @@
-package cliente;
-
-import comercio.Product;
+package comercio;
 
 /**
  * Representa um produto vendido numa compra. Atenção, esta classe não contém a

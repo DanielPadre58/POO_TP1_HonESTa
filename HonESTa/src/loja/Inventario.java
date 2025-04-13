@@ -1,7 +1,8 @@
-package comercio;
+package loja;
 
 import cliente.Cartao;
 import cliente.Cupao;
+import comercio.Product;
 
 import java.util.ArrayList;
 import java.util.List;
