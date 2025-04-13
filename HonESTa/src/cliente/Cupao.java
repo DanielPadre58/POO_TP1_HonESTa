@@ -32,7 +32,7 @@ public class Cupao {
 
         this.validade = LocalDate.now().plusDays(Validator.requirePositive(validade));
 
-        this.inicio = LocalDate.now().plusDays(Validator.requirePositive(inicio));
+        this.inicio = LocalDate.now().plusDays(Validator.requirePositiveOrZero(inicio));
 
         this.produtos = Objects.requireNonNull(produtos);
     }
