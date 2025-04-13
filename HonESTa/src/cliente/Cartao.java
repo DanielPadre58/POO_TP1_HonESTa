@@ -15,7 +15,7 @@ public class Cartao {
     private final String id;
     private long saldo;
     private HashMap<Cupao, Boolean> cupoes;
-    private boolean estaAtivo;
+    private boolean estaAtivo = false;
 
     public String getId() {
         return id;

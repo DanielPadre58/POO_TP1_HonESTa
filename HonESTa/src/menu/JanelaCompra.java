@@ -84,7 +84,7 @@ public class JanelaCompra extends JFrame {
      * @param c o cartão a usar na compra
      */
     private void pagarComCartao(Cartao c) {
-        if (c.estaAtivo()) {
+        if (!c.estaAtivo()) {
             JOptionPane.showMessageDialog(this, "Por favor, ative cartão na aplicação!");
             return;
         }

@@ -296,7 +296,7 @@ public class JanelaCartao extends JFrame {
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         final Timer t = new Timer(500, list -> {
-            if (cardAtual.estaAtivo()) {
+            if (!cardAtual.estaAtivo()) {
                 ((Timer) list.getSource()).stop();
                 dialog.dispose();
             }
