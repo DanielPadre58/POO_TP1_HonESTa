@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import comercio.ProdutoInfo;
+import comercio.Product;
 
 /**
  * Classe que representa um cupão emitido pela cadeia de lojas HonESta. Este
@@ -17,9 +17,9 @@ public class Cupao {
     private final float desconto;
     private final LocalDate inicio;
     private final LocalDate validade;
-    private List <ProdutoInfo> produtos;
+    private List <Product> produtos;
 
-    public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<ProdutoInfo> produtos) {
+    public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<Product> produtos) {
         verificarId(id);
         this.id = id;
 
@@ -64,7 +64,7 @@ public class Cupao {
         }
     }
 
-    public void verificarProdutos(List<ProdutoInfo> produtos) {
+    public void verificarProdutos(List<Product> produtos) {
         if (produtos == null || produtos.isEmpty()) {
             throw new IllegalArgumentException("A lista de produtos não pode ser vazia ou nula!");
         }
@@ -92,13 +92,13 @@ public class Cupao {
         return validade;
     }
 
-    public List<ProdutoInfo> getProdutos() {
+    public List<Product> getProdutos() {
         return produtos;
     }
 
     // Setters
 
-    public void setProdutos(ArrayList<ProdutoInfo> produtos) {
+    public void setProdutos(ArrayList<Product> produtos) {
         this.produtos = produtos;
     }
 

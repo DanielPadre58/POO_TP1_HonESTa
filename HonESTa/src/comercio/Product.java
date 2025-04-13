@@ -1,10 +1,10 @@
 package comercio;
 
-public class ProdutoInfo {
+public class Product {
     private final String codigoBarras, marca, modelo;
     private long precoAtual;
 
-    public ProdutoInfo(String codigoBarras, String marca, String modelo, long precoAtual) {
+    public Product(String codigoBarras, String marca, String modelo, long precoAtual) {
         verficarCodigoDeBarras(codigoBarras);
         this.codigoBarras = codigoBarras;
 

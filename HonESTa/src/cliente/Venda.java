@@ -1,7 +1,5 @@
 package cliente;
 
-import comercio.ProdutoInfo;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 

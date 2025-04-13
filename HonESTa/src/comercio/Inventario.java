@@ -12,7 +12,7 @@ import java.util.List;
  * fornecer métodos de pesquisa que usem os códigos para descobrir os produtos.
  */
 public class Inventario {
-    List<ProdutoInfo> stockProdutos;
+    List<Product> stockProdutos;
     List<Cartao> cartoes;
     List<Cupao> cupoesEmpresa;
 
@@ -20,7 +20,7 @@ public class Inventario {
         return cartoes;
     }
 
-    public List<ProdutoInfo> getStockProdutos() {
+    public List<Product> getStockProdutos() {
         return stockProdutos;
     }
 
@@ -28,7 +28,7 @@ public class Inventario {
         return cupoesEmpresa;
     }
 
-    public Inventario(List<ProdutoInfo> stockProdutos, List<Cartao> cartoes, List<Cupao> cupoesEmpresa) {
+    public Inventario(List<Product> stockProdutos, List<Cartao> cartoes, List<Cupao> cupoesEmpresa) {
         verificarProdutos(stockProdutos);
         this.stockProdutos = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class Inventario {
         this.cupoesEmpresa = cupoesEmpresa;
     }
 
-    public Inventario(List<ProdutoInfo> stockProdutos) {
+    public Inventario(List<Product> stockProdutos) {
         this(stockProdutos, new ArrayList<>(), new ArrayList<>());
     }
 
@@ -53,7 +53,7 @@ public class Inventario {
         }
     }
 
-    private void verificarProdutos(List<ProdutoInfo> stockProdutos) {
+    private void verificarProdutos(List<Product> stockProdutos) {
         if(stockProdutos == null) {
             throw new IllegalArgumentException("A lista de produtos em stock nao deve ser nula!");
         }
@@ -71,8 +71,8 @@ public class Inventario {
      * @param codigoBarras o código de barras do produto que se pretende
      * @return o produto com o código de barras, ou null caso não exista
      */
-    public ProdutoInfo getProduto(String codigoBarras) {
-        for (ProdutoInfo produto : stockProdutos){
+    public Product getProduto(String codigoBarras) {
+        for (Product produto : stockProdutos){
             if(produto.getCodigoBarras().equals(codigoBarras)) {
                 return produto;
             }
@@ -113,7 +113,7 @@ public class Inventario {
         return null;
     }
 
-    public void adicionarProduto(ProdutoInfo produto) {
+    public void adicionarProduto(Product produto) {
         stockProdutos.add(produto);
     }
 

@@ -61,7 +61,6 @@ public class Cartao {
      * @param ativos lista de cupões para ativar
      */
     public void ativar(List<Cupao> ativos) {
-        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
         for (Cupao cupao : ativos) {
             cupoes.replace(cupao, true);
         }
@@ -70,7 +69,7 @@ public class Cartao {
     }
 
     public void desativar(){
-        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = new HashMap<>(cupoes);
         cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
             cupoes.replace(cupao, false);
         });
@@ -92,7 +91,7 @@ public class Cartao {
             throw new IllegalStateException("Nao pode usar um carto que nao foi ativo");
         }
 
-        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = new HashMap<>(cupoes);
         cupoesPlaceHolder.forEach((Cupao cupao, Boolean valido) ->{
             if(cupoes.get(cupao) && !v.foiUsado(cupao)) {
                 if(cupao.aplicar(this, v)){
@@ -101,9 +100,7 @@ public class Cartao {
             }
 
             for(Cupao cupaoRemover : v.getCupoesUsados()){
-                if(cupoes.containsKey(cupaoRemover)){
-                    cupoes.remove(cupaoRemover);
-                }
+                cupoes.remove(cupaoRemover);
             }
         });
 
@@ -148,7 +145,7 @@ public class Cartao {
      * Atualiza os cupões, removendo os que já passaram de validade
      */
     public void atualizarCupoes() {
-        HashMap<Cupao, Boolean> cupoesPlaceHolder = (HashMap<Cupao, Boolean>)cupoes.clone();
+        HashMap<Cupao, Boolean> cupoesPlaceHolder = new HashMap<>(cupoes);
         cupoesPlaceHolder.forEach((Cupao cupao, Boolean ativo) ->{
             if(!cupao.estaValido()){
                 cupoes.remove(cupao);

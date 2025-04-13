@@ -30,7 +30,7 @@ import cliente.Cartao;
 import cliente.ProdutoVendido;
 import cliente.Venda;
 import comercio.Inventario;
-import comercio.ProdutoInfo;
+import comercio.Product;
 
 /**
  * Janela que simula uma caixa das lojas da cadeia HonESTa. No lado direito,
@@ -48,7 +48,7 @@ public class JanelaCompra extends JFrame {
     private static final Font ftLista = new Font("Monospaced", Font.BOLD, 12);
 
     // elementos gráficos da janela
-    private DefaultListModel<ProdutoInfo> vendaModel;
+    private DefaultListModel<Product> vendaModel;
     private JLabel totalLbl;
 
     // a venda atual, isto é, a venda que está a ser feita neste momento. Assim que
@@ -72,7 +72,7 @@ public class JanelaCompra extends JFrame {
      * 
      * @param p o produto identificado pelo leitor de códigos de barras
      */
-    private void adicionarProdutoVenda(ProdutoInfo p) {
+    private void adicionarProdutoVenda(Product p) {
         vendaAtual.adicionarProduto(new ProdutoVendido(p));
 
         atualizarPrecoTotal(vendaAtual.getTotalCompra());
@@ -84,7 +84,7 @@ public class JanelaCompra extends JFrame {
      * @param c o cartão a usar na compra
      */
     private void pagarComCartao(Cartao c) {
-        if (!c.estaAtivo()) {
+        if (c.estaAtivo()) {
             JOptionPane.showMessageDialog(this, "Por favor, ative cartão na aplicação!");
             return;
         }
@@ -125,7 +125,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return o preço do produto
      */
-    private long getPrecoProduto(ProdutoInfo p) {
+    private long getPrecoProduto(Product p) {
         return p.getPrecoAtual();
     }
 
@@ -135,7 +135,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return uma string que indica a marca do produto
      */
-    private String getMarcaProduto(ProdutoInfo p) {
+    private String getMarcaProduto(Product p) {
         return p.getMarca();
     }
 
@@ -145,7 +145,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return uma string que indica o modelo do produto
      */
-    private String getModeloProduto(ProdutoInfo p) {
+    private String getModeloProduto(Product p) {
         return p.getModelo();
     }
 
@@ -206,12 +206,12 @@ public class JanelaCompra extends JFrame {
      * @param prods os produtos a apresentar
      * @return o painel com os controlos dos produtos
      */
-    private JPanel setupInventario(Collection<ProdutoInfo> prods) {
+    private JPanel setupInventario(Collection<Product> prods) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setPreferredSize(new Dimension(RendererListaInventario.DIM_BASE.width * 2 + 10, ALTURA_JANELA));
-        DefaultListModel<ProdutoInfo> produtosModel = new DefaultListModel<>();
+        DefaultListModel<Product> produtosModel = new DefaultListModel<>();
         produtosModel.addAll(prods);
-        JList<ProdutoInfo> produtos = new JList<>(produtosModel);
+        JList<Product> produtos = new JList<>(produtosModel);
         produtos.setMaximumSize(new Dimension(RendererListaInventario.DIM_BASE.width * 2, ALTURA_JANELA + 30));
         produtos.setLayoutOrientation(JList.VERTICAL_WRAP);
         produtos.setVisibleRowCount(-1);
@@ -222,7 +222,7 @@ public class JanelaCompra extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting() || produtos.getSelectedValue() == null)
                     return;
-                ProdutoInfo prod = produtos.getSelectedValue();
+                Product prod = produtos.getSelectedValue();
                 adicionarProdutoVenda(prod);
                 vendaModel.addElement(prod);
                 produtos.clearSelection();
@@ -249,7 +249,7 @@ public class JanelaCompra extends JFrame {
         JPanel vendaPnl = new JPanel(new BorderLayout());
         vendaPnl.setBorder(new TitledBorder("Produtos comprados"));
         vendaModel = new DefaultListModel<>();
-        JList<ProdutoInfo> vendaList = new JList<>(vendaModel);
+        JList<Product> vendaList = new JList<>(vendaModel);
         vendaList.setEnabled(false);
         vendaList.setCellRenderer(new RendererListaVenda());
         vendaPnl.add(new JScrollPane(vendaList));
@@ -275,7 +275,7 @@ public class JanelaCompra extends JFrame {
     private final class RendererListaInventario extends DefaultListCellRenderer {
 
         private static final Dimension DIM_BASE = new Dimension(150, 40);
-        private ProdutoInfo produto;
+        private Product produto;
 
         @Override
         public Dimension getPreferredSize() {
@@ -285,7 +285,7 @@ public class JanelaCompra extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                 boolean cellHasFocus) {
-            produto = (ProdutoInfo) value;
+            produto = (Product) value;
             return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
         }
 
@@ -309,7 +309,7 @@ public class JanelaCompra extends JFrame {
     private final class RendererListaVenda extends DefaultListCellRenderer {
         private static final int MAXIMO_LINHA = 25;
         private static final Dimension DIM_BASE = new Dimension(260, 20);
-        private ProdutoInfo produto;
+        private Product produto;
 
         /**
          * Método chamado para saber qual a marca e modelo de um produto
@@ -317,7 +317,7 @@ public class JanelaCompra extends JFrame {
          * @param p o produto cuja informação é precisa
          * @return uma string composta mela marca e modelo do produto
          */
-        private String getMarcaModeloProduto(ProdutoInfo p) {
+        private String getMarcaModeloProduto(Product p) {
             return getMarcaProduto(p) + " " + getModeloProduto(p);
         }
 
@@ -329,7 +329,7 @@ public class JanelaCompra extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                 boolean cellHasFocus) {
-            produto = (ProdutoInfo) value;
+            produto = (Product) value;
             return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
         }
 

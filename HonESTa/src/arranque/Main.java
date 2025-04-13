@@ -7,7 +7,7 @@ import javax.swing.*;
 import cliente.Cartao;
 import cliente.Cupao;
 import comercio.Inventario;
-import comercio.ProdutoInfo;
+import comercio.Product;
 import menu.JanelaCartao;
 import menu.JanelaCompra;
 
@@ -42,25 +42,25 @@ public class Main {
      * @param inventario onde colocar os produtos
      */
     private static void criarProdutos(Inventario inventario) {
-        inventario.adicionarProduto(new ProdutoInfo("123-001", "EST", "BarraMix maçã canela", 89));
-        inventario.adicionarProduto(new ProdutoInfo("123-002", "EST", "CeriCrisp", 149));
-        inventario.adicionarProduto(new ProdutoInfo("123-003", "EST", "Sumix Limonada", 149));
-        inventario.adicionarProduto(new ProdutoInfo("123-004", "EST", "Chocolate com amêndoas", 149));
-        inventario.adicionarProduto(new ProdutoInfo("123-005", "EST", "Arroz agulha", 109));
-        inventario.adicionarProduto(new ProdutoInfo("123-006", "EST", "Arroz carolino", 119));
-        inventario.adicionarProduto(new ProdutoInfo("123-007", "EST", "Arroz basmati ", 169));
-        inventario.adicionarProduto(new ProdutoInfo("222-001", "AlbiCereal", "Arroz Agulha", 169));
-        inventario.adicionarProduto(new ProdutoInfo("222-002", "AlbiCereal", "Arroz Carolino", 179));
-        inventario.adicionarProduto(new ProdutoInfo("222-003", "AlbiCereal", "Céu Estrelado", 219));
-        inventario.adicionarProduto(new ProdutoInfo("222-004", "AlbiCereal", "Aveia crunch", 249));
-        inventario.adicionarProduto(new ProdutoInfo("222-005", "AlbiCereal", "Massa Esparguete", 99));
-        inventario.adicionarProduto(new ProdutoInfo("222-006", "AlbiCereal", "Massa macarronete", 109));
-        inventario.adicionarProduto(new ProdutoInfo("301-001", "DoceVida", "Chocolate de leite", 149));
-        inventario.adicionarProduto(new ProdutoInfo("301-002", "DoceVida", "Chocolate com Avelã", 169));
-        inventario.adicionarProduto(new ProdutoInfo("301-003", "DoceVida", "Chocolate negro 70%", 189));
-        inventario.adicionarProduto(new ProdutoInfo("404-001", "Referescante", "Sumo de maçã", 139));
-        inventario.adicionarProduto(new ProdutoInfo("404-002", "Referescante", "Sumo de laranja", 139));
-        inventario.adicionarProduto(new ProdutoInfo("404-003", "Referescante", "Sumo de ananás ", 139));
+        inventario.adicionarProduto(new Product("123-001", "EST", "BarraMix maçã canela", 89));
+        inventario.adicionarProduto(new Product("123-002", "EST", "CeriCrisp", 149));
+        inventario.adicionarProduto(new Product("123-003", "EST", "Sumix Limonada", 149));
+        inventario.adicionarProduto(new Product("123-004", "EST", "Chocolate com amêndoas", 149));
+        inventario.adicionarProduto(new Product("123-005", "EST", "Arroz agulha", 109));
+        inventario.adicionarProduto(new Product("123-006", "EST", "Arroz carolino", 119));
+        inventario.adicionarProduto(new Product("123-007", "EST", "Arroz basmati ", 169));
+        inventario.adicionarProduto(new Product("222-001", "AlbiCereal", "Arroz Agulha", 169));
+        inventario.adicionarProduto(new Product("222-002", "AlbiCereal", "Arroz Carolino", 179));
+        inventario.adicionarProduto(new Product("222-003", "AlbiCereal", "Céu Estrelado", 219));
+        inventario.adicionarProduto(new Product("222-004", "AlbiCereal", "Aveia crunch", 249));
+        inventario.adicionarProduto(new Product("222-005", "AlbiCereal", "Massa Esparguete", 99));
+        inventario.adicionarProduto(new Product("222-006", "AlbiCereal", "Massa macarronete", 109));
+        inventario.adicionarProduto(new Product("301-001", "DoceVida", "Chocolate de leite", 149));
+        inventario.adicionarProduto(new Product("301-002", "DoceVida", "Chocolate com Avelã", 169));
+        inventario.adicionarProduto(new Product("301-003", "DoceVida", "Chocolate negro 70%", 189));
+        inventario.adicionarProduto(new Product("404-001", "Referescante", "Sumo de maçã", 139));
+        inventario.adicionarProduto(new Product("404-002", "Referescante", "Sumo de laranja", 139));
+        inventario.adicionarProduto(new Product("404-003", "Referescante", "Sumo de ananás ", 139));
         //Adicionar mais 2 produtos
     }
 

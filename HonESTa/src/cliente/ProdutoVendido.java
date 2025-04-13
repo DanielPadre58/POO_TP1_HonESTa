@@ -1,6 +1,6 @@
 package cliente;
 
-import comercio.ProdutoInfo;
+import comercio.Product;
 
 /**
  * Representa um produto vendido numa compra. Atenção, esta classe não contém a
@@ -9,11 +9,11 @@ import comercio.ProdutoInfo;
  * na altura e o desconto.
  */
 public class ProdutoVendido {
-    final private ProdutoInfo produto;
+    final private Product produto;
     final private long preco;
     private float descontoAplicado;
 
-    public ProdutoInfo getProduto() {
+    public Product getProduto() {
         return produto;
     }
 
@@ -29,7 +29,7 @@ public class ProdutoVendido {
         this.descontoAplicado = descontoAplicado;
     }
 
-    public ProdutoVendido(ProdutoInfo produto, long preco, long descontoAplicado) {
+    public ProdutoVendido(Product produto, long preco, long descontoAplicado) {
         validarProduto(produto);
         this.produto = produto;
 
@@ -40,7 +40,7 @@ public class ProdutoVendido {
         this.descontoAplicado = descontoAplicado;
     }
 
-    public ProdutoVendido(ProdutoInfo produto, long preco) {
+    public ProdutoVendido(Product produto, long preco) {
         validarProduto(produto);
         this.produto = produto;
 
@@ -50,7 +50,7 @@ public class ProdutoVendido {
         this.descontoAplicado = 0;
     }
 
-    public ProdutoVendido(ProdutoInfo produto) {
+    public ProdutoVendido(Product produto) {
         validarProduto(produto);
         this.produto = produto;
 
@@ -70,7 +70,7 @@ public class ProdutoVendido {
         }
     }
 
-    private void validarProduto(ProdutoInfo produto) {
+    private void validarProduto(Product produto) {
         if(produto == null) {
             throw new IllegalArgumentException("Produto vendido nao pode ser nulo");
         }
