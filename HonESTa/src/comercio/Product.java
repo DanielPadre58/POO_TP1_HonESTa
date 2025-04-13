@@ -38,7 +38,7 @@ public class Product {
 
     // Setters
 
-    public void setPrecoAtual(long precoAtual) {
+    public void alterarPreco(long precoAtual) {
         verificarPreco(precoAtual);
         this.precoAtual = precoAtual;
     }

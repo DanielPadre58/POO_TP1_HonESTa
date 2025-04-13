@@ -39,13 +39,7 @@ public class ProdutoVendido {
     }
 
     public ProdutoVendido(Product produto, long preco) {
-        validarProduto(produto);
-        this.produto = produto;
-
-        validarPreco(preco);
-        this.preco = preco;
-
-        this.descontoAplicado = 0;
+        this(produto, preco, 0);
     }
 
     public ProdutoVendido(Product produto) {
@@ -53,6 +47,7 @@ public class ProdutoVendido {
         this.produto = produto;
 
         this.preco = produto.getPrecoAtual();
+
         this.descontoAplicado = 0;
     }
 
