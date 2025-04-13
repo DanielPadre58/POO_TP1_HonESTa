@@ -90,7 +90,7 @@ public class Cartao {
      */
     public void usar(Venda v) {
         if(!estaAtivo){
-            throw new IllegalStateException("Nao pode usar um carto que nao foi ativo");
+            throw new IllegalStateException("Nao pode usar um cartão que nao foi ativo");
         }
 
         HashMap<Cupao, Boolean> cupoesPlaceHolder = new HashMap<>(cupoes);

@@ -30,7 +30,7 @@ import cliente.Cartao;
 import comercio.ProdutoVendido;
 import comercio.Venda;
 import loja.Inventario;
-import comercio.Product;
+import comercio.Produto;
 
 /**
  * Janela que simula uma caixa das lojas da cadeia HonESTa. No lado direito,
@@ -48,7 +48,7 @@ public class JanelaCompra extends JFrame {
     private static final Font ftLista = new Font("Monospaced", Font.BOLD, 12);
 
     // elementos gráficos da janela
-    private DefaultListModel<Product> vendaModel;
+    private DefaultListModel<Produto> vendaModel;
     private JLabel totalLbl;
 
     // a venda atual, isto é, a venda que está a ser feita neste momento. Assim que
@@ -72,7 +72,7 @@ public class JanelaCompra extends JFrame {
      * 
      * @param p o produto identificado pelo leitor de códigos de barras
      */
-    private void adicionarProdutoVenda(Product p) {
+    private void adicionarProdutoVenda(Produto p) {
         vendaAtual.adicionarProduto(new ProdutoVendido(p));
 
         atualizarPrecoTotal(vendaAtual.getTotalCompra());
@@ -125,7 +125,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return o preço do produto
      */
-    private long getPrecoProduto(Product p) {
+    private long getPrecoProduto(Produto p) {
         return p.getPrecoAtual();
     }
 
@@ -135,7 +135,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return uma string que indica a marca do produto
      */
-    private String getMarcaProduto(Product p) {
+    private String getMarcaProduto(Produto p) {
         return p.getMarca();
     }
 
@@ -145,7 +145,7 @@ public class JanelaCompra extends JFrame {
      * @param p o produto cuja informação é precisa
      * @return uma string que indica o modelo do produto
      */
-    private String getModeloProduto(Product p) {
+    private String getModeloProduto(Produto p) {
         return p.getModelo();
     }
 
@@ -206,12 +206,12 @@ public class JanelaCompra extends JFrame {
      * @param prods os produtos a apresentar
      * @return o painel com os controlos dos produtos
      */
-    private JPanel setupInventario(Collection<Product> prods) {
+    private JPanel setupInventario(Collection<Produto> prods) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setPreferredSize(new Dimension(RendererListaInventario.DIM_BASE.width * 2 + 10, ALTURA_JANELA));
-        DefaultListModel<Product> produtosModel = new DefaultListModel<>();
+        DefaultListModel<Produto> produtosModel = new DefaultListModel<>();
         produtosModel.addAll(prods);
-        JList<Product> produtos = new JList<>(produtosModel);
+        JList<Produto> produtos = new JList<>(produtosModel);
         produtos.setMaximumSize(new Dimension(RendererListaInventario.DIM_BASE.width * 2, ALTURA_JANELA + 30));
         produtos.setLayoutOrientation(JList.VERTICAL_WRAP);
         produtos.setVisibleRowCount(-1);
@@ -222,7 +222,7 @@ public class JanelaCompra extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 if (e.getValueIsAdjusting() || produtos.getSelectedValue() == null)
                     return;
-                Product prod = produtos.getSelectedValue();
+                Produto prod = produtos.getSelectedValue();
                 adicionarProdutoVenda(prod);
                 vendaModel.addElement(prod);
                 produtos.clearSelection();
@@ -249,7 +249,7 @@ public class JanelaCompra extends JFrame {
         JPanel vendaPnl = new JPanel(new BorderLayout());
         vendaPnl.setBorder(new TitledBorder("Produtos comprados"));
         vendaModel = new DefaultListModel<>();
-        JList<Product> vendaList = new JList<>(vendaModel);
+        JList<Produto> vendaList = new JList<>(vendaModel);
         vendaList.setEnabled(false);
         vendaList.setCellRenderer(new RendererListaVenda());
         vendaPnl.add(new JScrollPane(vendaList));
@@ -275,7 +275,7 @@ public class JanelaCompra extends JFrame {
     private final class RendererListaInventario extends DefaultListCellRenderer {
 
         private static final Dimension DIM_BASE = new Dimension(150, 40);
-        private Product produto;
+        private Produto produto;
 
         @Override
         public Dimension getPreferredSize() {
@@ -285,7 +285,7 @@ public class JanelaCompra extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                 boolean cellHasFocus) {
-            produto = (Product) value;
+            produto = (Produto) value;
             return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
         }
 
@@ -309,7 +309,7 @@ public class JanelaCompra extends JFrame {
     private final class RendererListaVenda extends DefaultListCellRenderer {
         private static final int MAXIMO_LINHA = 25;
         private static final Dimension DIM_BASE = new Dimension(260, 20);
-        private Product produto;
+        private Produto produto;
 
         /**
          * Método chamado para saber qual a marca e modelo de um produto
@@ -317,7 +317,7 @@ public class JanelaCompra extends JFrame {
          * @param p o produto cuja informação é precisa
          * @return uma string composta mela marca e modelo do produto
          */
-        private String getMarcaModeloProduto(Product p) {
+        private String getMarcaModeloProduto(Produto p) {
             return getMarcaProduto(p) + " " + getModeloProduto(p);
         }
 
@@ -329,7 +329,7 @@ public class JanelaCompra extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                 boolean cellHasFocus) {
-            produto = (Product) value;
+            produto = (Produto) value;
             return super.getListCellRendererComponent(list, "", index, isSelected, cellHasFocus);
         }
 

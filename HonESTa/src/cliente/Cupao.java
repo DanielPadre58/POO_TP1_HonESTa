@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import comercio.Product;
+import comercio.Produto;
 import comercio.ProdutoVendido;
 import comercio.Venda;
 
@@ -19,9 +19,9 @@ public class Cupao {
     private final float desconto;
     private final LocalDate inicio;
     private final LocalDate validade;
-    private List <Product> produtos;
+    private List <Produto> produtos;
 
-    public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<Product> produtos) {
+    public Cupao(String id, String descricao, float desconto, int inicio, int validade, List<Produto> produtos) {
         verificarId(id);
         this.id = id;
 
@@ -66,7 +66,7 @@ public class Cupao {
         }
     }
 
-    public void verificarProdutos(List<Product> produtos) {
+    public void verificarProdutos(List<Produto> produtos) {
         if (produtos == null || produtos.isEmpty()) {
             throw new IllegalArgumentException("A lista de produtos não pode ser vazia ou nula!");
         }
@@ -94,13 +94,13 @@ public class Cupao {
         return validade;
     }
 
-    public List<Product> getProdutos() {
+    public List<Produto> getProdutos() {
         return produtos;
     }
 
     // Setters
 
-    public void setProdutos(ArrayList<Product> produtos) {
+    public void setProdutos(ArrayList<Produto> produtos) {
         this.produtos = produtos;
     }
 

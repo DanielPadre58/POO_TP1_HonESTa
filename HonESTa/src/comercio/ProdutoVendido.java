@@ -7,11 +7,11 @@ package comercio;
  * na altura e o desconto.
  */
 public class ProdutoVendido {
-    final private Product produto;
+    final private Produto produto;
     final private long preco;
     private float descontoAplicado;
 
-    public Product getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
@@ -27,7 +27,7 @@ public class ProdutoVendido {
         this.descontoAplicado = descontoAplicado;
     }
 
-    public ProdutoVendido(Product produto, long preco, long descontoAplicado) {
+    public ProdutoVendido(Produto produto, long preco, long descontoAplicado) {
         validarProduto(produto);
         this.produto = produto;
 
@@ -38,11 +38,11 @@ public class ProdutoVendido {
         this.descontoAplicado = descontoAplicado;
     }
 
-    public ProdutoVendido(Product produto, long preco) {
+    public ProdutoVendido(Produto produto, long preco) {
         this(produto, preco, 0);
     }
 
-    public ProdutoVendido(Product produto) {
+    public ProdutoVendido(Produto produto) {
         validarProduto(produto);
         this.produto = produto;
 
@@ -63,7 +63,7 @@ public class ProdutoVendido {
         }
     }
 
-    private void validarProduto(Product produto) {
+    private void validarProduto(Produto produto) {
         if(produto == null) {
             throw new IllegalArgumentException("Produto vendido nao pode ser nulo");
         }
