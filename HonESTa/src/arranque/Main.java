@@ -157,7 +157,8 @@ public class Main {
                         inventario.getCupao("1003"),
                         inventario.getCupao("1004"),
                         inventario.getCupao("1005"),
-                        inventario.getCupao("1006")
+                        inventario.getCupao("1006"),
+                        inventario.getCupao("1007")
                 )));
     }
 }
