@@ -3,7 +3,6 @@ package loja;
 import cliente.Cartao;
 import cliente.Cupao;
 import comercio.Produto;
-import util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;

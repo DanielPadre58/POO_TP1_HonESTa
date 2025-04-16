@@ -1,7 +1,6 @@
 package comercio;
 
 import cliente.Cupao;
-import util.Validator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -62,6 +62,9 @@ public class Main {
         inventario.adicionarProduto(new Produto("404-002", "Referescante", "Sumo de laranja", 139));
         inventario.adicionarProduto(new Produto("404-003", "Referescante", "Sumo de ananás ", 139));
         //Adicionar mais 2 produtos
+
+        inventario.adicionarProduto(new Produto("007-001", "Customs", "Dotor Pimentas", 200));
+        inventario.adicionarProduto(new Produto("007-002", "Customs", "RTX 5090",150000));
     }
 
     /**
@@ -75,7 +78,8 @@ public class Main {
                         inventario.getProduto("123-003"),
                         inventario.getProduto("404-001"),
                         inventario.getProduto("404-002"),
-                        inventario.getProduto("404-003")
+                        inventario.getProduto("404-003"),
+                        inventario.getProduto("007-001")
                 )));
 
         inventario.adicionarCupao(new Cupao("1002", "em chocolates", 0.25f, 0, 7,
@@ -117,6 +121,11 @@ public class Main {
                         inventario.getProduto("123-002"),
                         inventario.getProduto("222-003"),
                         inventario.getProduto("222-004")
+                )));
+        inventario.adicionarCupao(new Cupao("1007", "na marca Customs", 0.15f, 0, 30,
+                Arrays.asList(
+                        inventario.getProduto("007-001"),
+                        inventario.getProduto("007-002")
                 )));
     }
 
